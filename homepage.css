@@ -1,0 +1,179 @@
+/* General Body Styling */
+body {
+    font-family: 'MedievalSharp', cursive;
+    color: #f5deb3; /* --font-color from the original UI */
+    margin: 0;
+    padding: 0;
+}
+
+.background-image {
+    background-image: url('https://images.alphacoders.com/488/488711.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+.page-container {
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent overlay */
+    position: relative;
+    z-index: 1;
+}
+
+/* Header and Navigation */
+.main-header {
+    background: rgba(10, 5, 0, 0.8);
+    border-bottom: 3px solid #4a2a00;
+    padding: 10px 20px;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo img {
+    height: 50px;
+    filter: brightness(1.2);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-links li {
+    margin-left: 30px;
+}
+
+.nav-links a {
+    color: #f0e68c; /* Khaki */
+    text-decoration: none;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffd700; /* Gold */
+}
+
+/* Hero Section */
+.hero-section {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero-content h1 {
+    font-size: 4em;
+    margin-bottom: 20px;
+    color: #ffd700;
+    text-shadow: 2px 2px 5px #000;
+}
+
+.hero-content p {
+    font-size: 1.5em;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.cta-button {
+    background-color: #ffd700;
+    color: #1a1a1a;
+    border: 2px solid #DAA520; /* GoldenRod */
+    padding: 15px 30px;
+    font-family: 'MedievalSharp', cursive;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 0 10px #ffd700;
+}
+
+.cta-button:hover {
+    background-color: #DAA520;
+    box-shadow: 0 0 20px #ffd700;
+    transform: scale(1.05);
+}
+
+/* News Section */
+.news-section {
+    padding: 50px 20px;
+}
+
+.news-section h2 {
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #ffd700;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.news-card {
+    background: rgba(20, 10, 5, 0.85);
+    border: 3px solid #4a2a00;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.news-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content h3 {
+    font-size: 1.5em;
+    margin-top: 0;
+    color: #f0e68c;
+}
+
+.card-content p {
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.read-more {
+    color: #ffd700;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.main-footer {
+    text-align: center;
+    padding: 20px;
+    background: rgba(10, 5, 0, 0.8);
+    border-top: 3px solid #4a2a00;
+    margin-top: 50px;
+}
