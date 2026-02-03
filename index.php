@@ -7,15 +7,15 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
     exit;
 }
 
-    $isMobile = false;
-    $userAgent = $_SERVER['HTTP_USER_AGENT'];
-    $mobileKeywords = ['Mobile', 'Android', 'iPhone', 'iPad', 'iPod', 'BlackBerry', 'Windows Phone'];
-    foreach ($mobileKeywords as $keyword) {
-        if (strpos($userAgent, $keyword) !== false) {
-            $isMobile = true;
-            break;
-        }
+$isMobile = false;
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+$mobileKeywords = ['Mobile', 'Android', 'iPhone', 'iPad', 'iPod', 'BlackBerry', 'Windows Phone'];
+foreach ($mobileKeywords as $keyword) {
+    if (strpos($userAgent, $keyword) !== false) {
+        $isMobile = true;
+        break;
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -323,7 +323,9 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 
             <section id="about" class="content-section">
                 <h2>About Razenderon</h2>
-                <p>At Razenderon, we are committed to providing our customers with the best rental experience. Our diverse fleet, competitive prices, and exceptional customer service make us the top choice for car rentals. Whether for a business trip or a family vacation, we have the perfect car for you.</p>
+                <p>At Razenderon, we are committed to providing our customers with the best rental experience. 
+                    Our diverse fleet, competitive prices, and exceptional customer service make us the top choice for car rentals. 
+                    Whether for a business trip or a family vacation, we have the perfect car for you.</p>
             </section>
 
             <section id="fleet" class="content-section">
