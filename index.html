@@ -1,247 +1,369 @@
+<?php
+    $isMobile = false;
+    $userAgent = $_SERVER['HTTP_USER_AGENT'];
+    $mobileKeywords = ['Mobile', 'Android', 'iPhone', 'iPad', 'iPod', 'BlackBerry', 'Windows Phone'];
+    foreach ($mobileKeywords as $keyword) {
+        if (strpos($userAgent, $keyword) !== false) {
+            $isMobile = true;
+            break;
+        }
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WoW-like UI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+    <title>Razenderon Car Rentals</title>
     <style>
-        /* 
-         * Asset Attributions:
-         * Icons from game-icons.net, licensed under CC BY 3.0.
-         * Stone texture from sharetextures.com, licensed under CC0.
-         * Parchment texture from freepik.com, free license with attribution.
-         * Avatar from itch.io (Gordy Higgins), public domain.
-        */
-        :root {
-            --border-color: #4a4a4a;
-            --border-highlight: #9a9a9a;
-            --health-color: #2a9d8f;
-            --mana-color: #264653;
-            --xp-color: #8a2be2;
-            --font-color: #f5deb3;
-        }
-
+        /* General Body Styling */
         body {
-            background-color: #1a1a1a;
-            font-family: 'MedievalSharp', cursive;
-            color: var(--font-color);
+            font-family: 'Roboto', sans-serif;
+            color: #333;
             margin: 0;
             padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            background-image: url('https://www.transparenttextures.com/patterns/dark-denim-3.png');
+            background-color: #f4f7f6;
         }
 
-        .wow-ui {
+        .background-image {
+            background: linear-gradient(to right, #005c97, #363795);
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
+        }
+
+        .page-container {
+            background-color: rgba(255, 255, 255, 0.9);
             position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
 
-        /* Player and Target Frames */
-        .unit-frame {
-            position: absolute;
-            top: 20px;
-            width: 300px;
-            height: 80px;
-            background-color: #111;
-            border: 3px solid var(--border-color);
-            border-image: linear-gradient(to bottom, var(--border-highlight), var(--border-color)) 1;
-            box-shadow: 0 0 15px rgba(0,0,0,0.8);
+        /* Header and Navigation */
+        .main-header {
+            background: #ffffff;
+            border-bottom: 2px solid #005c97;
+            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
-        #player-frame {
-            left: 20px;
+        .main-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        #target-frame {
-            left: 340px;
+        .nav-logo h1 {
+            margin: 0;
+            font-size: 2em;
+            color: #005c97;
         }
 
-        .unit-frame .portrait {
-            float: left;
-            width: 70px;
-            height: 70px;
-            margin: 5px;
-            border: 2px solid var(--border-color);
+        .nav-links {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
         }
 
-        .unit-frame .portrait img {
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        .nav-links a {
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #005c97;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(to right, #005c97, #363795);
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .hero-content p {
+            font-size: 1.3em;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            background-color: #ffffff;
+            color: #005c97;
+            border: 2px solid #ffffff;
+            padding: 15px 30px;
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 5px;
+        }
+
+        .cta-button:hover {
+            background-color: transparent;
+            color: #ffffff;
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 60px 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .content-section:last-of-type {
+            border-bottom: none;
+        }
+
+        .content-section h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #005c97;
+        }
+
+        /* Fleet Section */
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .car-card {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .car-card img {
             width: 100%;
-            height: 100%;
+            height: 200px;
             object-fit: cover;
         }
 
-        .unit-frame .info {
-            float: left;
-            width: 210px;
-            padding-top: 5px;
+        .card-content {
+            padding: 20px;
         }
 
-        .unit-frame .name {
-            font-size: 1.2em;
-            font-weight: bold;
+        .card-content h3 {
+            font-size: 1.5em;
+            margin-top: 0;
+            color: #005c97;
         }
 
-        .unit-frame .resource-bar {
+        .card-content p {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        /* Footer */
+        .main-footer {
+            text-align: center;
+            padding: 30px;
+            background: #333;
+            color: #f4f7f6;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .main-nav {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5em;
+            }
+
+            .hero-content p {
+                font-size: 1.1em;
+            }
+
+            .content-section h2 {
+                font-size: 2em;
+            }
+
+            .fleet-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-toggle {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-around;
+                width: 30px;
+                height: 25px;
+                cursor: pointer;
+                position: absolute;
+                top: 25px;
+                right: 30px;
+            }
+
+            .menu-toggle div {
+                width: 100%;
+                height: 3px;
+                background-color: #333;
+                transition: all 0.3s;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .menu-toggle {
+                display: none;
+            }
+        }
+
+        body.mobile .main-nav {
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        body.mobile .nav-links {
+            display: none; /* Initially hide nav links */
+            flex-direction: column;
+            text-align: center;
             width: 100%;
-            height: 20px;
-            background-color: #333;
-            border: 1px solid #000;
-            margin-top: 5px;
         }
 
-        .unit-frame .resource-bar > div {
-            height: 100%;
-            transition: width 0.5s ease-in-out;
+        body.mobile .nav-links.active {
+            display: flex; /* Show when active */
         }
 
-        #health-bar { background-color: var(--health-color); width: 80%; }
-        #mana-bar { background-color: var(--mana-color); width: 60%; }
-        #target-health-bar { background-color: var(--health-color); width: 100%; }
-
-        /* Minimap */
-        #minimap {
+        body.mobile .menu-toggle {
+            display: block; /* Show hamburger menu */
             position: absolute;
-            top: 20px;
+            top: 25px;
             right: 20px;
-            width: 200px;
-            height: 200px;
-            background-color: #000;
-            border: 8px solid;
-            border-image: url(https://www.sharetextures.com/media/textures/10/256/stone-wall-1-diffuse-1k.jpg) 30 round;
-            border-radius: 50%;
-            overflow: hidden;
+            cursor: pointer;
         }
-
-        #minimap-image {
-            width: 100%;
-            height: 100%;
-            background: url(https://img.freepik.com/free-photo/blank-old-paper-texture-background_1373-532.jpg);
-            background-size: cover;
-            opacity: 0.7;
-        }
-
-        /* Action Bar */
-        #action-bar {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            background-image: url(https://www.sharetextures.com/media/textures/10/256/stone-wall-1-diffuse-1k.jpg);
-            background-size: cover;
-            padding: 10px;
-            border: 5px solid;
-            border-image: linear-gradient(to top, #4a4a4a, #9a9a9a) 1;
-            box-shadow: 0 0 20px black;
-        }
-        
-        .action-slot {
-            width: 60px;
-            height: 60px;
-            margin: 0 5px;
-            background-color: #111;
-            border: 2px solid var(--border-color);
-            position: relative;
-        }
-
-        .action-slot:hover {
-            border-color: var(--border-highlight);
-        }
-
-        .action-slot img {
-            width: 100%;
-            height: 100%;
-            padding: 5px;
-            box-sizing: border-box;
-        }
-        
-        .action-slot .keybind {
-            position: absolute;
-            top: 2px;
-            right: 4px;
-            font-size: 0.9em;
-            color: white;
-            text-shadow: 1px 1px 2px black;
-        }
-
-        /* Chat Box */
-        #chat-box {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            width: 400px;
-            height: 200px;
-            background: url(https://img.freepik.com/free-photo/blank-old-paper-texture-background_1373-532.jpg);
-            background-size: cover;
-            border: 3px solid #4a2a00;
-            padding: 10px;
-            box-sizing: border-box;
-            overflow-y: scroll;
-            font-size: 0.9em;
-            color: #333;
-        }
-
     </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="<?php if ($isMobile) echo 'mobile'; ?>">
+    <div class="background-image"></div>
+    <div class="page-container">
+        <header class="main-header">
+            <nav class="main-nav">
+                <a href="#" class="nav-logo">
+                    <h1>Razenderon</h1>
+                </a>
+                <div class="menu-toggle">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#fleet">Our Fleet</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <div class="wow-ui">
-        <!-- Player Frame -->
-        <div id="player-frame" class="unit-frame">
-            <div class="portrait">
-                <img src="https://img.itch.zone/aW1nLzE5NDU0OTcucG5n/original/gGZAU4.png" alt="Player Portrait">
-            </div>
-            <div class="info">
-                <div class="name">Player</div>
-                <div class="resource-bar"><div id="health-bar"></div></div>
-                <div class="resource-bar"><div id="mana-bar"></div></div>
-            </div>
-        </div>
+        <main class="content-wrapper">
+            <section id="hero" class="hero-section">
+                <div class="hero-content">
+                    <h1>Your Journey Starts Here</h1>
+                    <p>Premium car rentals for any occasion. Quality, comfort, and safety guaranteed.</p>
+                    <button class="cta-button">Browse Cars</button>
+                </div>
+            </section>
 
-        <!-- Target Frame -->
-        <div id="target-frame" class="unit-frame">
-            <div class="portrait">
-                <!-- Placeholder for target -->
-            </div>
-            <div class="info">
-                <div class="name">Target</div>
-                <div class="resource-bar"><div id="target-health-bar"></div></div>
-            </div>
-        </div>
+            <section id="about" class="content-section">
+                <h2>About Razenderon</h2>
+                <p>At Razenderon, we are committed to providing our customers with the best rental experience. Our diverse fleet, competitive prices, and exceptional customer service make us the top choice for car rentals. Whether for a business trip or a family vacation, we have the perfect car for you.</p>
+            </section>
 
-        <!-- Minimap -->
-        <div id="minimap">
-            <div id="minimap-image"></div>
-        </div>
+            <section id="fleet" class="content-section">
+                <h2>Our Fleet</h2>
+                <div class="fleet-grid">
+                    <div class="car-card">
+                        <img src="https://via.placeholder.com/300x200.png?text=Economy+Car" alt="Economy Car">
+                        <div class="card-content">
+                            <h3>Economy</h3>
+                            <p>Perfect for city trips and fuel efficiency.</p>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <img src="https://via.placeholder.com/300x200.png?text=SUV" alt="SUV">
+                        <div class="card-content">
+                            <h3>SUV</h3>
+                            <p>Spacious and versatile for family adventures.</p>
+                        </div>
+                    </div>
+                    <div class="car-card">
+                        <img src="https://via.placeholder.com/300x200.png?text=Luxury+Sedan" alt="Luxury Sedan">
+                        <div class="card-content">
+                            <h3>Luxury Sedan</h3>
+                            <p>Travel in style and comfort.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Action Bar -->
-        <div id="action-bar">
-            <div class="action-slot"><img src="https://game-icons.net/icons/ffffff/000000/1x1/delapouite/broadsword.svg" alt="Sword Icon"><span class="keybind">1</span></div>
-            <div class="action-slot"><img src="https://game-icons.net/icons/ffffff/000000/1x1/delapouite/shield.svg" alt="Shield Icon"><span class="keybind">2</span></div>
-            <div class="action-slot"><img src="https://game-icons.net/icons/ffffff/000000/1x1/delapouite/fireball.svg" alt="Fireball Icon"><span class="keybind">3</span></div>
-            <div class="action-slot"><img src="https://game-icons.net/icons/ffffff/000000/1x1/lorc/ice-shard.svg" alt="Ice Shard Icon"><span class="keybind">4</span></div>
-            <div class="action-slot"><img src="https://game-icons.net/icons/ffffff/000000/1x1/delapouite/healing.svg" alt="Heal Icon"><span class="keybind">5</span></div>
-            <div class="action-slot"><img src="https://game-icons.net/icons/ffffff/000000/1x1/delapouite/axe-swing.svg" alt="Axe Icon"><span class="keybind">6</span></div>
-        </div>
-        
-        <!-- Chat Box -->
-        <div id="chat-box">
-            <p>[General] Welcome to the World of Gemini-Craft!</p>
-            <p>[Guild] Don't forget the raid tonight at 8 PM!</p>
-            <p>[Whisper] From NoobSlayer: lol ur gear</p>
-        </div>
+            <section id="contact" class="content-section">
+                <h2>Contact Us</h2>
+                <p>Have questions? Reach out to us anytime.</p>
+                <p>Email: contact@razenderon.com | Phone: 123-456-7890</p>
+            </section>
+        </main>
 
+        <footer class="main-footer">
+            <p>&copy; 2026 Razenderon, Inc. All rights reserved.</p>
+        </footer>
     </div>
-
     <script>
-        // No complex JS needed for this static demo, but we could add some interactivity here.
-        console.log("UI Loaded");
-    </script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
 
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+        }
+    </script>
 </body>
 </html>
