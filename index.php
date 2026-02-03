@@ -3,7 +3,7 @@ session_start();
 
 // If the user is not logged in, redirect to the login page
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header('Location: login.html');
+    header('Location: login.php');
     exit;
 }
 
@@ -307,7 +307,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#fleet">Our Fleet</a></li>
                     <li><a href="#contact">Contact</a></li>
-                    <li><a href="logout.html">Logout</a></li>
+                    <li><a href="logout.php">Logout</a></li>
                 </ul>
             </nav>
         </header>
