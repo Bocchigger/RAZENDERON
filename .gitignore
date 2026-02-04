@@ -1,11 +1,8 @@
 # all files that musn't sync to the git
-# Use the tag to explain as to why it can't sync
-# text/ = folder
-# text.txt = all files with the name text.txt
 
 
-# everything in the config folder, like private files or info
+# everything in the config folder
 config/
 
-# the guide I made
+# a guide 
 guide.txt
