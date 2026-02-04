@@ -1,0 +1,18 @@
+CREATE TABLE `account` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `license` enum('B','B+','C','none') NOT NULL,
+  `TOS` datetime(1) DEFAULT NULL,
+  `fullName` varchar(100) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `password` varchar(10000) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `paymentHistory` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `localData` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `rentHistory` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `preferences` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+  `organisation` varchar(100) NOT NULL DEFAULT '',
+  `createdAt` datetime DEFAULT NULL,
+  `deletedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `userUnique` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci	
