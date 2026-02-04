@@ -10,17 +10,34 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
 $error = '';
 // Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Hardcoded credentials
-    $valid_username = 'admin';
-    $valid_password = 'password';
 
-    $username = $_POST['username'] ?? '';
-    $password = $_POST['password'] ?? '';
 
-    if ($username === $valid_username && $password === $valid_password) {
+
+//db connection
+    require_once '../config/config.php';
+    try {
+        $db = new PDO($dsn, $user, $password);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo 'Connection failed: ' . $e->getMessage();
+        exit;
+    }
+
+
+// prepare and execute query
+    $q = $db->prepare('SELECT * FROM account WHERE username = :username AND password = :password');
+    $q->execute([
+        'username' => $_POST['username'],
+        'password' => $_POST['password']
+    ]);
+    $user = $q->fetch(PDO::FETCH_ASSOC);
+
+// @todo wachtwoord hash toevoegen!
+
+    if (!empty ($user)) {
         // Set session variables
         $_SESSION['loggedin'] = true;
-        $_SESSION['username'] = $username;
+        $_SESSION['username'] = $user['username'];
 
         // Redirect to main page
         header('Location: /home');
@@ -29,6 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Invalid username or password.';
     }
 }
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
