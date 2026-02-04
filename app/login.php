@@ -3,7 +3,7 @@ session_start();
 
 // If user is already logged in, redirect to the main page
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header('Location: home.php');
+    header('Location: /home');
     exit;
 }
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $username;
 
         // Redirect to main page
-        header('Location: home.php');
+        header('Location: /home');
         exit;
     } else {
         $error = 'Invalid username or password.';
@@ -105,7 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="background-image"></div>
     <div class="login-container">
         <h1>Razenderon Login</h1>
-        <form class="login-form" method="POST" action="login.php">
+        <form class="login-form" method="POST" action="/login">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit">Login</button>
