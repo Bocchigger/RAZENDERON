@@ -10,3 +10,4 @@ try {
 }
 
 echo time();
+echo " - this is the homepage.";

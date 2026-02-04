@@ -1,3 +1,4 @@
 <?php
 
-echo "The information page is currently empty.";
+echo time();
+echo "- The information page is currently empty.";

@@ -6,7 +6,7 @@ switch ($URI) {
 
 
     case '/':
-        require_once 'home.php';
+        require_once 'info.php';
         break;
 
     case '/home':
