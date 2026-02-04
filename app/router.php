@@ -17,6 +17,10 @@ switch ($URI) {
         require_once 'logout.php';
         break;
 
+    case '/info':
+        require_once 'info.php';
+        break;
+
     default:
         require_once '404.php';
         break;
