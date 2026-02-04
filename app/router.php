@@ -9,6 +9,10 @@ switch ($URI) {
         require_once 'home.php';
         break;
 
+    case '/home':
+        require_once 'home.php';
+        break;
+
     case '/login':
         require_once 'login.php';
         break;
