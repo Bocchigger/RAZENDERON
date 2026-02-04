@@ -3,7 +3,7 @@ session_start();
 
 // If user is already logged in, redirect to the main page
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header('Location: index.php');
+    header('Location: home.php');
     exit;
 }
 
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $username;
 
         // Redirect to main page
-        header('Location: index.php');
+        header('Location: home.php');
         exit;
     } else {
         $error = 'Invalid username or password.';
