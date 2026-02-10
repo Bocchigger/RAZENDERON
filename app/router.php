@@ -13,6 +13,10 @@ switch ($URI) {
         require_once 'welcome.php';
         break;
 
+    case '/welcome':
+        require_once 'welcome.php';
+        break;
+
     case '/login':
         require_once 'login.php';
         break;

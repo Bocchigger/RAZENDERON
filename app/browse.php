@@ -47,5 +47,6 @@ exit;
 
 echo $html;
 
-
+echo "<br><br>";
+echo("Quick links: <a href='/login'>Login</a> | <a href='/logout'>Logout</a> | <a href='/welcome'>Welcome</a> | <a href='/404'>404 Page</a>");
 
