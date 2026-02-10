@@ -6,11 +6,11 @@ switch ($URI) {
 
 
     case '/':
-        require_once 'info.php';
+        require_once 'welcome.php';
         break;
 
     case '/home':
-        require_once 'home.php';
+        require_once 'welcome.php';
         break;
 
     case '/login':
@@ -21,8 +21,8 @@ switch ($URI) {
         require_once 'logout.php';
         break;
 
-    case '/info':
-        require_once 'info.php';
+    case '/browse':
+        require_once 'browse.php';
         break;
 
     default:

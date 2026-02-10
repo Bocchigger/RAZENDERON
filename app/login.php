@@ -3,7 +3,7 @@ session_start();
 
 // If user is already logged in, redirect to the main page
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header('Location: /home');
+    header('Location: /browse');
     exit;
 }
 
@@ -39,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $user['username'];
 
-        // Redirect to main page
-        header('Location: /home');
+        // Redirect to browse page
+        header('Location: /browse');
         exit;
     } else {
         $error = 'Invalid username or password.';

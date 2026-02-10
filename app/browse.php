@@ -12,7 +12,7 @@ try {
 }
 
 echo time();
-echo " - this is the homepage.";
+echo " - this is the browsepage.";
 
 
 $id = 4;
@@ -32,7 +32,7 @@ echo "</pre>";
 
 $time = time();
 
-$html = file_get_contents(__DIR__.'/view/home.html');
+$html = file_get_contents(__DIR__.'/view/browse.html');
 
 $html = str_replace('{{time}}', $time, $html);
 $html = str_replace('{{username}}', $_SESSION['username'], $html);
