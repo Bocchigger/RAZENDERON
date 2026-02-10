@@ -35,7 +35,15 @@ $time = time();
 $html = file_get_contents(__DIR__.'/view/browse.html');
 
 $html = str_replace('{{time}}', $time, $html);
-$html = str_replace('{{username}}', $_SESSION['username'], $html);
+
+if (isset($_SESSION['username'])) {
+    $html = str_replace('{{username}}', $_SESSION['username'], $html);
+} else {
+    header('Location: /login');
+exit;
+}
+
+
 
 echo $html;
 
