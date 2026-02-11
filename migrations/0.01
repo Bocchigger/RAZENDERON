@@ -1,0 +1,70 @@
+	CREATE TABLE `account` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `license` enum('B','B+','C','none') NOT NULL,
+ `TOS` datetime(1) DEFAULT NULL,
+ `fullName` varchar(100) NOT NULL,
+ `username` varchar(100) NOT NULL,
+ `password` varchar(10000) NOT NULL,
+ `email` varchar(100) NOT NULL,
+ `paymentHistory` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+ `localData` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+ `rentHistory` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+ `preferences` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL DEFAULT '',
+ `organisation` varchar(100) NOT NULL DEFAULT '',
+ `createdAt` datetime DEFAULT NULL,
+ `deletedAt` datetime DEFAULT NULL,
+ PRIMARY KEY (`ID`),
+ UNIQUE KEY `userUnique` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+
+	CREATE TABLE `car` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `isAvailable` tinyint(1) NOT NULL DEFAULT 1,
+ `hasDamage` tinyint(1) NOT NULL DEFAULT 0,
+ `hasInsurance` tinyint(1) NOT NULL DEFAULT 1,
+ `licenseReq` enum('B','B+','C') NOT NULL,
+ `fuel` enum('electric','gasoline','diesel','hybrid') NOT NULL,
+ `transmission` enum('automatic','manual') NOT NULL,
+ `brand` varchar(60) NOT NULL,
+ `seats` tinyint(7) NOT NULL,
+ `color` varchar(30) NOT NULL,
+ `extras` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`extras`)),
+ `data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
+ `deposit` decimal(4,2) DEFAULT NULL,
+ PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+
+	CREATE TABLE `damages` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `type` enum('minor','major','total loss') NOT NULL,
+ `description` text NOT NULL,
+ `accountID` int(11) NOT NULL,
+ `leaseID` int(11) NOT NULL,
+ `carID` int(11) NOT NULL,
+ `TOI` datetime NOT NULL,
+ `involvedDriver` varchar(150) NOT NULL,
+ `personAtFault` enum('renter','third party','other') NOT NULL,
+ PRIMARY KEY (`ID`),
+ KEY `dmgacc_c` (`accountID`),
+ KEY `dmgcar_c` (`carID`),
+ KEY `dmglease_c` (`leaseID`),
+ CONSTRAINT `dmgacc_c` FOREIGN KEY (`accountID`) REFERENCES `account` (`ID`),
+ CONSTRAINT `dmgcar_c` FOREIGN KEY (`carID`) REFERENCES `car` (`ID`),
+ CONSTRAINT `dmglease_c` FOREIGN KEY (`leaseID`) REFERENCES `lease` (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
+
+
+	CREATE TABLE `lease` (
+ `ID` int(11) NOT NULL AUTO_INCREMENT,
+ `car` int(11) NOT NULL,
+ `account` int(11) NOT NULL,
+ `startDay` date NOT NULL,
+ `lastDay` date NOT NULL,
+ PRIMARY KEY (`ID`),
+ KEY `car_c` (`car`),
+ KEY `account_c` (`account`),
+ CONSTRAINT `account_c` FOREIGN KEY (`account`) REFERENCES `account` (`ID`),
+ CONSTRAINT `car_c` FOREIGN KEY (`car`) REFERENCES `car` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci

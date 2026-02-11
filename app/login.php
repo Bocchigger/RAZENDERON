@@ -39,6 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $user['username'];
 
+    // Add db check for full name matching username, then save that to display in browse page
+
+
         // Redirect to browse page
         header('Location: /browse');
         exit;
