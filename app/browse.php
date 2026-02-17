@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 /*
 require_once '../config/config.php';
@@ -28,21 +27,20 @@ var_dump($result);
 echo "</pre>";
 */
 
+if (!isset($_SESSION['username'])) {
+    header('Location: /login');
+    exit;
+}
 
 
 $time = time();
 
 $html = file_get_contents(__DIR__.'/view/browse.html');
 
-$html = str_replace('{{time}}', $time, $html);
+// $html = str_replace('{{time}}', $time, $html);
+$html = str_replace('{{time}}', (new DateTime())->format('Y-m-d H:i:s'), $html);
 
-if (isset($_SESSION['username'])) {
-    $html = str_replace('{{username}}', $_SESSION['username'], $html);
-} else {
-    header('Location: /login');
-exit;
-}
-
+$html = str_replace('{{fullName}}', $_SESSION['fullName'], $html);
 
 
 echo $html;

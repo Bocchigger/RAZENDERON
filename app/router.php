@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 $URI = $_SERVER['REQUEST_URI'];
 
 switch ($URI) {
@@ -27,6 +29,10 @@ switch ($URI) {
 
     case '/browse':
         require_once 'browse.php';
+        break;
+
+    case '/import':
+        require_once 'import.php';
         break;
 
     default:

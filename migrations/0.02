@@ -1,0 +1,9 @@
+ALTER TABLE `car` CHANGE `type` `type` ENUM('electric','petrol','diesel','hybrid') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+ALTER TABLE `car` ADD `towbar` BOOLEAN NOT NULL AFTER `seats`;
+ALTER TABLE `car` ADD `winter_tires` BOOLEAN NOT NULL AFTER `color`;
+ALTER TABLE `car` ADD `roofbox_option` BOOLEAN NOT NULL AFTER `winter_tires`;
+ALTER TABLE `car` CHANGE `licenseReq` `licenseReq` ENUM('A','B','C','D') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+ALTER TABLE `car` CHANGE `licenseReq` `class` ENUM('A','B','C','D') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL;
+
+
+ALTER TABLE `damages` CHANGE `ID` `ID` VARCHAR(25) NOT NULL;

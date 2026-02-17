@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 // If user is already logged in, redirect to the main page
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
@@ -12,8 +11,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
-
-//db connection
+    //db connection
     require_once '../config/config.php';
     try {
         $db = new PDO($dsn, $user, $password);
@@ -24,22 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-// prepare and execute query
-    $q = $db->prepare('SELECT * FROM account WHERE username = :username AND password = :password');
+    // prepare and execute query
+    $q = $db->prepare('SELECT ID, fullName, username FROM account WHERE username = :username AND password = :password');
     $q->execute([
         'username' => $_POST['username'],
         'password' => $_POST['password']
     ]);
     $user = $q->fetch(PDO::FETCH_ASSOC);
 
-// @todo wachtwoord hash toevoegen!
+    // @todo wachtwoord hash toevoegen!
 
     if (!empty ($user)) {
         // Set session variables
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $user['username'];
-
-    // Add db check for full name matching username, then save that to display in browse page
+        $_SESSION['fullName'] = $user['fullName'];
+        $_SESSION['logintime'] = new DateTime();
 
 
         // Redirect to browse page
