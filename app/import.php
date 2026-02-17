@@ -1,8 +1,8 @@
 <?php
 
 
-if (!isset($_SESSION['username'])) {
-    header('Location: /login');
+if (empty($_SESSION['isAdmin'])) {
+    echo "access forbidden";
     exit;
 }
 

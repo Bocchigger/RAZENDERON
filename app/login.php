@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
     // prepare and execute query
-    $q = $db->prepare('SELECT ID, fullName, username FROM account WHERE username = :username AND password = :password');
+    $q = $db->prepare('SELECT ID, fullName, username, isAdmin FROM account WHERE username = :username AND password = :password');
     $q->execute([
         'username' => $_POST['username'],
         'password' => $_POST['password']
@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['username'] = $user['username'];
         $_SESSION['fullName'] = $user['fullName'];
         $_SESSION['logintime'] = new DateTime();
+        $_SESSION['isAdmin'] = $user['isAdmin'];
 
 
         // Redirect to browse page

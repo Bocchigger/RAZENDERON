@@ -7,3 +7,7 @@ ALTER TABLE `car` CHANGE `licenseReq` `class` ENUM('A','B','C','D') CHARACTER SE
 
 
 ALTER TABLE `damages` CHANGE `ID` `ID` VARCHAR(25) NOT NULL;
+
+
+
+ALTER TABLE `account` ADD `isAdmin` BOOLEAN NULL DEFAULT FALSE AFTER `username`;
