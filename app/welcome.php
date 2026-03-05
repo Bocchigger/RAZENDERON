@@ -1,4 +1,21 @@
 <?php
 
-echo time();
-echo "- Welcome to Razende Ron's Autoverhuur! This page will contain all the information about our company and the services we offer. Please navigate to the <a href='/browse'>browse page</a> to see our available cars.";
+$pageTitle = 'Welcome - Razenderon';
+include __DIR__ . '/_header.php';
+
+
+if (loggedIn()) {
+    $welcome_message = "";
+
+} else {
+
+    $welcome_message = "<p>Please <a href='/login'>login</a> to access the dashboard or view the public <a href='/browse'>asset list</a>.</p>";
+}
+
+
+$html = file_get_contents(__DIR__.'/view/welcome.html');
+$html = str_replace('{{welcome_message}}', $welcome_message, $html);
+
+echo $html;
+
+include __DIR__ . '/_footer.php';

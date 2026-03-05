@@ -1,0 +1,7 @@
+ALTER TABLE `car`
+	ADD COLUMN `image` VARCHAR(255) NULL DEFAULT NULL AFTER `age`,
+	ADD COLUMN `price_per_day` DECIMAL(6,2) NULL DEFAULT NULL AFTER `image`;
+
+ALTER TABLE `car`
+	CHANGE COLUMN `age` `age` INT NOT NULL DEFAULT (0) AFTER `deposit`;
+    

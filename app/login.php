@@ -10,18 +10,6 @@ $error = '';
 // Check if the form has been submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-
-    //db connection
-    require_once '../config/config.php';
-    try {
-        $db = new PDO($dsn, $user, $password);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        echo 'Connection failed: ' . $e->getMessage();
-        exit;
-    }
-
-
     // prepare and execute query
     $q = $db->prepare('SELECT ID, fullName, username, isAdmin FROM account WHERE username = :username AND password = :password');
     $q->execute([

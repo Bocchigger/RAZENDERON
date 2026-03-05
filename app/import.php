@@ -69,7 +69,7 @@ foreach ($cars as $car){
         'brand' => $car["brand"],
         'model' => $car["model"],
         'type' => $car["type"],
-        'age' => $car["age"],
+        'age' => 2026 - $car["age"],
         'seats' => $car["seats"],
         'towbar' => (int)$car["towbar"],
         'color' => substr($car["color"], 0, 30),
