@@ -31,7 +31,7 @@ if ($count > 1) {
 }
 
 foreach ($cars as $car){
-    echo $car["brand"] . " " . $car["model"] . "<br>";
+    echo $car["brand"] . " " . $car["model"] . " " . $car["color"] . "<br>";
     
     $q = $db->prepare('INSERT INTO car SET 
         id = :id,
@@ -71,10 +71,10 @@ foreach ($cars as $car){
         'type' => $car["type"],
         'age' => $car["age"],
         'seats' => $car["seats"],
-        'towbar' => $car["towbar"],
+        'towbar' => (int)$car["towbar"],
         'color' => substr($car["color"], 0, 30),
-        'winter_tires' => $car["winter_tires"],
-        'roofbox_option' => $car["roofbox_option"],
+        'winter_tires' => (int)$car["winter_tires"],
+        'roofbox_option' => (int)$car["roofbox_option"],
         'class' => $car["class"]
     ]);
 }
