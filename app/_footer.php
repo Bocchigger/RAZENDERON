@@ -12,7 +12,7 @@
             <p><strong>Brand:</strong> <span id="modalCarBrand"></span></p>
             <p><strong>Model:</strong> <span id="modalCarModel"></span></p>
             <p><strong>Year:</strong> <span id="modalCarYear"></span></p>
-            <p><strong>Price per day:</strong> $<span id="modalCarPrice"></span></p>
+            <p><strong>Price per day:</strong> €<span id="modalCarPrice"></span></p>
             <p><strong>Type:</strong> <span id="modalCarType"></span></p>
             <p><strong>Seats:</strong> <span id="modalCarSeats"></span></p>
             <p><strong>Color:</strong> <span id="modalCarColor"></span></p>
