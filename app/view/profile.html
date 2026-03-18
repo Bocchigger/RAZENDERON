@@ -1,0 +1,57 @@
+<div class="wide-container">
+    <div class="card">
+        <h1>User Profile</h1>
+        
+        {{update_message}}
+
+        <!-- Display Mode -->
+        <div id="profile-display">
+            <div class="profile-info">
+                <label>Username:</label>
+                <span>{{username}}</span>
+
+                <label>Full Name:</label>
+                <span data-key="full_name">{{fullName}}</span>
+
+                <label>Email:</label>
+                <span data-key="email">{{email}}</span>
+
+                <label>Member Since:</label>
+                <span>{{createdAt}}</span>
+            </div>
+            <button id="edit-button" class="btn" style="width: auto; margin-top: 20px;">Edit Profile</button>
+        </div>
+
+        <!-- Edit Mode (Initially Hidden) -->
+        <form id="profile-edit-form" method="POST" action="profile.php" style="display: none;">
+            <div class="profile-info">
+                <label for="full_name">Full Name:</label>
+                <input type="text" id="full_name" name="full_name" value="{{fullName}}">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="{{email}}">
+            </div>
+            <button type="submit" name="update_profile" class="btn" style="width: auto; margin-top: 20px;">Save Changes</button>
+            <button type="button" id="cancel-button" class="btn" style="width: auto; margin-top: 20px; background-color: #555;">Cancel</button>
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const displayDiv = document.getElementById('profile-display');
+    const editForm = document.getElementById('profile-edit-form');
+    const editButton = document.getElementById('edit-button');
+    const cancelButton = document.getElementById('cancel-button');
+
+    editButton.addEventListener('click', function() {
+        displayDiv.style.display = 'none';
+        editForm.style.display = 'block';
+    });
+
+    cancelButton.addEventListener('click', function() {
+        displayDiv.style.display = 'block';
+        editForm.style.display = 'none';
+    });
+});
+</script>
