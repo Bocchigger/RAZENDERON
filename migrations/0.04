@@ -1,0 +1,100 @@
+CREATE TABLE `account` (
+	`ID` INT NOT NULL AUTO_INCREMENT,
+	`license` ENUM('B','B+','C','none') NOT NULL COLLATE 'utf8mb4_general_ci',
+	`TOS` DATETIME(1) NULL DEFAULT NULL,
+	`fullName` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`username` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`isAdmin` TINYINT(1) NULL DEFAULT '0',
+	`password` VARCHAR(10000) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`email` VARCHAR(100) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`paymentHistory` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_bin',
+	`localData` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_bin',
+	`rentHistory` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_bin',
+	`preferences` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_bin',
+	`organisation` VARCHAR(100) NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	`createdAt` DATETIME NULL DEFAULT NULL,
+	`deletedAt` DATETIME NULL DEFAULT NULL,
+	PRIMARY KEY (`ID`) USING BTREE,
+	UNIQUE INDEX ` username` (`username`) USING BTREE
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=3
+;
+
+
+
+CREATE TABLE `car` (
+	`ID` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`isAvailable` TINYINT(1) NOT NULL DEFAULT '1',
+	`hasDamage` TINYINT(1) NOT NULL DEFAULT '0',
+	`hasInsurance` TINYINT(1) NOT NULL DEFAULT '1',
+	`class` ENUM('A','B','C','D') NOT NULL COLLATE 'utf8mb4_general_ci',
+	`brand` VARCHAR(60) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`model` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`type` ENUM('electric','petrol','diesel','hybrid') NOT NULL COLLATE 'utf8mb4_general_ci',
+	`transmission` ENUM('automatic','manual') NOT NULL COLLATE 'utf8mb4_general_ci',
+	`seats` TINYINT NOT NULL,
+	`towbar` TINYINT(1) NOT NULL,
+	`color` VARCHAR(30) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`winter_tires` TINYINT(1) NOT NULL,
+	`roofbox_option` TINYINT(1) NOT NULL,
+	`extras` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_bin',
+	`data` LONGTEXT NULL DEFAULT NULL COLLATE 'utf8mb4_bin',
+	`deposit` DECIMAL(4,2) NULL DEFAULT NULL,
+	`age` INT NOT NULL DEFAULT '0',
+	`image` VARCHAR(255) NULL DEFAULT NULL COLLATE 'utf8mb4_general_ci',
+	`price_per_day` DECIMAL(6,2) NULL DEFAULT NULL,
+	PRIMARY KEY (`ID`) USING BTREE,
+	CONSTRAINT `car_chk_1` CHECK (json_valid(`extras`))
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+
+
+
+CREATE TABLE `damages` (
+	`ID` VARCHAR(25) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`type` ENUM('minor','major','total loss') NOT NULL COLLATE 'utf8mb4_general_ci',
+	`description` TEXT NOT NULL COLLATE 'utf8mb4_general_ci',
+	`accountID` INT NOT NULL,
+	`leaseID` INT NOT NULL,
+	`carID` VARCHAR(50) NOT NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	`TOI` DATETIME NOT NULL,
+	`involvedDriver` VARCHAR(150) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`personAtFault` ENUM('renter','third party','other') NOT NULL COLLATE 'utf8mb4_general_ci',
+	PRIMARY KEY (`ID`) USING BTREE,
+	INDEX `dmgacc_c` (`accountID`) USING BTREE,
+	INDEX `dmglease_c` (`leaseID`) USING BTREE,
+	INDEX `dmgcar_c` (`carID`) USING BTREE,
+	CONSTRAINT `dmgacc_c` FOREIGN KEY (`accountID`) REFERENCES `account` (`ID`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `dmgcar_c` FOREIGN KEY (`carID`) REFERENCES `car` (`ID`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `dmglease_c` FOREIGN KEY (`leaseID`) REFERENCES `lease` (`ID`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+;
+
+
+
+
+CREATE TABLE `lease` (
+	`ID` INT NOT NULL AUTO_INCREMENT,
+	`car` VARCHAR(50) NOT NULL DEFAULT '' COLLATE 'utf8mb4_general_ci',
+	`account` INT NOT NULL,
+	`startDay` DATE NOT NULL,
+	`lastDay` DATE NOT NULL,
+	PRIMARY KEY (`ID`) USING BTREE,
+	INDEX `account_c` (`account`) USING BTREE,
+	INDEX `car_c` (`car`) USING BTREE,
+	CONSTRAINT `account_c` FOREIGN KEY (`account`) REFERENCES `account` (`ID`) ON UPDATE NO ACTION ON DELETE NO ACTION,
+	CONSTRAINT `car_c` FOREIGN KEY (`car`) REFERENCES `car` (`ID`) ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+COLLATE='utf8mb4_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=5
+;
+
+
