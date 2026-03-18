@@ -9,7 +9,7 @@ if (loggedIn()) {
 
 } else {
 
-    $welcome_message = "<p>Please <a href='/login'>login</a> to access the dashboard or view the public <a href='/browse'>asset list</a>.</p>";
+    $welcome_message = "<p>Please <a href='/login'>login</a> or <a href='/signup'>create an account</a> to access the dashboard or view the public <a href='/browse'>asset list</a>.</p>";
 }
 
 

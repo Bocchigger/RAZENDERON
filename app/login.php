@@ -23,6 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty ($user)) {
         // Set session variables
         $_SESSION['loggedin'] = true;
+        $_SESSION['id'] = $user['ID'];
         $_SESSION['username'] = $user['username'];
         $_SESSION['fullName'] = $user['fullName'];
         $_SESSION['logintime'] = new DateTime();

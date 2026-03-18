@@ -31,6 +31,10 @@ switch ($URI) {
         require_once 'logout.php';
         break;
 
+    case '/signup':
+        require_once 'signup.php';
+        break;
+
     case '/browse':
         require_once 'browse.php';
         break;
