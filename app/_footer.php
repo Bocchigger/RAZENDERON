@@ -7,7 +7,7 @@
     <div id="carModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <img id="modalCarImage" src="" alt="Car Image" class="modal-car-image">
+            <img style="max-width:500px" id="modalCarImage" src="" alt="Car Image" class="modal-car-image">
             <h2 id="modalCarTitle"></h2>
             <p><strong>Brand:</strong> <span id="modalCarBrand"></span></p>
             <p><strong>Model:</strong> <span id="modalCarModel"></span></p>

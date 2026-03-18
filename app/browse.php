@@ -50,13 +50,19 @@ foreach ($availableCars as $car) {
         $favoriteStar = '<a href="/browse?add_fav=' . $car['ID'] . '" class="favorite-star" title="Add to Favorites">&#9734;</a>';
     }
 
+    if (empty($car['image'])) {
+        $car['image'] = 'auto_placeholder.png';
+    }
+
     // Prepare data attributes for the modal
     $dataAttributes = ' data-id="' . htmlspecialchars($car['ID']) . '"';
     // ... (rest of data attributes)
 
-    if (empty($car['image'])) {
-        $car['image'] = 'auto_placeholder.png';
+    foreach ($car as $key => $value) {
+        $dataAttributes .= ' data-' . $key . '="' . $value . '" ';
     }
+
+    $dataAttributes .= ' data-status="available"';
 
     $carListHtml .= '
         <div class="car-item" ' . $dataAttributes . '>
@@ -138,13 +144,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            modalCarImage.src = item.dataset.image;
+            modalCarImage.src = '/images/' + item.dataset.image;
             modalCarTitle.textContent = item.dataset.make + ' ' + item.dataset.model + ' (' + item.dataset.year + ')';
             modalCarBrand.textContent = item.dataset.make;
             modalCarModel.textContent = item.dataset.model;
             modalCarYear.textContent = item.dataset.year;
-            modalCarPrice.textContent = item.dataset.price;
-            modalCarType.textContent = item.dataset.fuelType; // Map type to fuelType
+            modalCarPrice.textContent = item.dataset.price_per_day;
+            modalCarType.textContent = item.dataset.type; 
             modalCarSeats.textContent = item.dataset.seats;
             modalCarColor.textContent = item.dataset.color;
             modalCarStatus.textContent = item.dataset.status;
