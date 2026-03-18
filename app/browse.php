@@ -54,10 +54,14 @@ foreach ($availableCars as $car) {
     $dataAttributes = ' data-id="' . htmlspecialchars($car['ID']) . '"';
     // ... (rest of data attributes)
 
+    if (empty($car['image'])) {
+        $car['image'] = 'auto_placeholder.png';
+    }
+
     $carListHtml .= '
         <div class="car-item" ' . $dataAttributes . '>
             ' . $favoriteStar . '
-            <img src="' . htmlspecialchars($car['image']) . '" alt="' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . '">
+            <img src="/images/' . htmlspecialchars($car['image']) . '" alt="' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . '">
             <div class="car-item-content">
                 <h3>' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . ' (' . htmlspecialchars($car['year']) . ')</h3>
                 <p class="price">&euro;' . htmlspecialchars($car['price_per_day']) . ' / day</p>
@@ -86,10 +90,14 @@ if (!empty($unavailableCars)) {
         $dataAttributes = ' data-id="' . htmlspecialchars($car['ID']) . '"';
         // ... (rest of data attributes)
 
+        if (empty($car['image'])) {
+            $car['image'] = 'auto_placeholder.png';
+        }
+
         $carListHtml .= '
             <div class="car-item" ' . $dataAttributes . '>
                  ' . $favoriteStar . '
-                <img src="' . htmlspecialchars($car['image']) . '" alt="' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . '">
+                <img src="/images/' . htmlspecialchars($car['image']) . '" alt="' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . '">
                 <div class="car-item-content">
                     <h3>' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . ' (' . htmlspecialchars($car['year']) . ')</h3>
                     <p class="price">$' . htmlspecialchars($car['price_per_day']) . ' / day</p>
