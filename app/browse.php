@@ -65,7 +65,7 @@ foreach ($availableCars as $car) {
     $dataAttributes .= ' data-status="available"';
 
     $carListHtml .= '
-        <div class="car-item" ' . $dataAttributes . '>
+        <div class="car-item clickable" ' . $dataAttributes . '>
             ' . $favoriteStar . '
             <img src="/images/' . htmlspecialchars($car['image']) . '" alt="' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . '">
             <div class="car-item-content">
@@ -121,7 +121,7 @@ echo $content;
 ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const carItems = document.querySelectorAll('.car-item');
+    const carItems = document.querySelectorAll('.clickable');
     const modal = document.getElementById('carModal');
     const closeButton = document.querySelector('.close-button');
     const modalCarImage = document.getElementById('modalCarImage');

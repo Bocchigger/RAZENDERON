@@ -20,9 +20,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
     // Basic validation
     if (!empty($fullName) && !empty($email) && filter_var($email, FILTER_VALIDATE_EMAIL)) {
         try {
-            $db = "UPDATE account SET fullName = ?, email = ? WHERE id = ?";
-            $stmt = $db->prepare($db);
-            $stmt->execute([$fullName, $email, $user_id]);
+            $sql = "UPDATE account SET fullName = :fullName, email = :email WHERE id = :id";
+            $stmt = $db->prepare($sql);
+            $stmt->execute([
+                'fullName' => $fullName, 
+                'email' => $email, 
+                'id' => $user_id
+                ]);
             $update_message = '<p style="color: #8aff8a;">Profile updated successfully!</p>';
         } catch (PDOException $e) {
             // Handle potential duplicate email error

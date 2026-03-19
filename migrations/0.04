@@ -99,3 +99,13 @@ AUTO_INCREMENT=5
 
 
 UPDATE `rrav`.`car` SET `image`='vwgolf.png' WHERE  `ID`='6970dc27e8667bd5a9dfde03';
+
+ALTER TABLE `lease`
+	ADD COLUMN `totalCost` DECIMAL(6,2) NULL DEFAULT NULL AFTER `lastDay`;
+
+ALTER TABLE `lease`
+	DROP FOREIGN KEY `account_c`;
+
+ALTER TABLE `lease`
+	DROP FOREIGN KEY `car_c`;
+

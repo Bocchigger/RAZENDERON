@@ -348,3 +348,6 @@ body.login-page .container {
     color: #ffd700; /* Gold color for favorited */
 }
 
+.profile-info label {
+    margin-top: 25px;
+}
