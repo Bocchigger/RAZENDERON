@@ -18,8 +18,8 @@ if (!isset($_SESSION['favorites'])) {
 }
 
 // Handle adding a car to favorites
-if (isset($_GET['add_fav'])) {
-    $add_id = (int)$_GET['add_fav'];
+if (!empty($_GET['add_fav'])) {
+    $add_id = $_GET['add_fav'];
     if (!in_array($add_id, $_SESSION['favorites'])) {
         $_SESSION['favorites'][] = $add_id;
     }
@@ -28,12 +28,20 @@ if (isset($_GET['add_fav'])) {
     exit;
 }
 
+// Handle remove favorite action
+if (isset($_GET['remove_fav'])) {
+    $remove_id = $_GET['remove_fav'];
+    // array_diff is a clean way to remove an element by its value
+    $_SESSION['favorites'] = array_diff($_SESSION['favorites'], [$remove_id]);
+    // Redirect to the same page without the GET parameter to prevent accidental re-removal
+    header('Location: /browse');
+    exit;
+}
+
 $content = file_get_contents(__DIR__ . '/view/browse.html');
 
 // Replace placeholders in the HTML
 $carListHtml = '';
-
-// var_dump($availableCars) ;
 
 // Render Available Cars first
 foreach ($availableCars as $car) {
@@ -44,7 +52,7 @@ foreach ($availableCars as $car) {
     $favoriteStar = '';
     if (in_array($car['ID'], $_SESSION['favorites'])) {
         // Favorited: Link to remove (handled by favorites.php), solid star
-        $favoriteStar = '<a href="/favorites?remove_fav=' . $car['ID'] . '" class="favorite-star favorited" title="Remove from Favorites">&#9733;</a>';
+        $favoriteStar = '<a href="/browse?remove_fav=' . $car['ID'] . '" class="favorite-star favorited" title="Remove from Favorites">&#9733;</a>';
     } else {
         // Not favorited: Link to add, outline star
         $favoriteStar = '<a href="/browse?add_fav=' . $car['ID'] . '" class="favorite-star" title="Add to Favorites">&#9734;</a>';

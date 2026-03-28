@@ -20,7 +20,9 @@ $currentPage = $URI;
         <a href="/browse" class="<?php echo ($currentPage == '/browse') ? 'active' : ''; ?>">Browse Cars</a>
         <a href="/active_leases" class="<?php echo ($currentPage == '/active_leases') ? 'active' : ''; ?>">Active Leases</a>
         <a href="/profile" class="<?php echo ($currentPage == '/profile') ? 'active' : ''; ?>">Profile</a>
+        <!--
         <a href="/compare" class="<?php echo ($currentPage == '/compare') ? 'active' : ''; ?>">Compare Cars</a>
+        -->
         <a href="/favorites" class="<?php echo ($currentPage == '/favorites') ? 'active' : ''; ?>">Favorites</a>
         <?php if (isAdmin()): ?>
             <a href="/admin_panel" class="<?php echo ($currentPage == '/admin_panel') ? 'active' : ''; ?>">Admin Panel</a>

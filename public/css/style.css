@@ -364,3 +364,12 @@ body.login-page .container {
     background-color: rgb(255, 38, 38);
     box-shadow: unset;
 }
+
+.delete-link {
+    color: red;
+    font-size: 90%;
+}
+
+.delete-link:hover {
+    color: white;
+}

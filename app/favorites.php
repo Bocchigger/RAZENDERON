@@ -1,21 +1,15 @@
 <?php
 $pageTitle = 'Your Favorites - Razenderon';
-include '_header.php';
-// include 'config/database.php';
+include __DIR__ . '/_header.php';
 
-// Session management must be at the very top
-// The header.php already starts the session, so this is just for clarity
-if (!isset($_SESSION['favorites'])) {
-    $_SESSION['favorites'] = [];
-}
 
 // Handle remove favorite action FIRST, before any data is fetched
 if (isset($_GET['remove_fav'])) {
-    $remove_id = (int)$_GET['remove_fav'];
+    $remove_id = $_GET['remove_fav'];
     // array_diff is a clean way to remove an element by its value
     $_SESSION['favorites'] = array_diff($_SESSION['favorites'], [$remove_id]);
     // Redirect to the same page without the GET parameter to prevent accidental re-removal
-    header('Location: favorites.php');
+    header('Location: /favorites');
     exit;
 }
 
@@ -24,29 +18,34 @@ $favoritedCarsHtml = '';
 
 if (!empty($_SESSION['favorites'])) {
     // Create the correct number of placeholders for the IN () clause
-    $placeholders = implode(',', array_fill(0, count($_SESSION['favorites']), '?'));
+    $placeholders = implode(',', $_SESSION['favorites']);
     
+    $placeholders = str_repeat('?,',count($_SESSION['favorites'])) . '0';
     // Fetch all favorited cars from the database in one query
     $sql = "SELECT * FROM car WHERE id IN ($placeholders)";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $db->prepare($sql);
     $stmt->execute($_SESSION['favorites']);
     $favoritedCars = $stmt->fetchAll();
     
     foreach ($favoritedCars as $car) {
         $button = '';
-        if ($car['status'] === 'available') {
-            $button = '<button class="btn" onclick="location.href=\'checkout.php?car_id=' . $car['id'] . '\'">Rent Now</button>';
+        if ($car['isAvailable'] === 1) {
+            $button = '<button class="btn" onclick="location.href=\'/checkout?car_id=' . $car['ID'] . '\'">Rent Now</button>';
         } else {
             $button = '<button class="btn" disabled>' . htmlspecialchars(ucfirst($car['status'])) . '</button>';
         }
 
+        if (empty($car['image'])) {
+            $car['image'] = 'auto_placeholder.png';
+        }  
+
         $favoritedCarsHtml .= '
             <div class="car-item">
-                <img src="' . htmlspecialchars($car['image']) . '" alt="' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . '">
-                <h3>' . htmlspecialchars($car['make']) . ' ' . htmlspecialchars($car['model']) . ' (' . htmlspecialchars($car['year']) . ')</h3>
-                <p>Price: $' . htmlspecialchars($car['price_per_day']) . ' / day</p>
+                <img src="/images/' . htmlspecialchars($car['image']) . '" style="max-width:300px; margin:auto;" alt="' . htmlspecialchars($car['brand']) . ' ' . htmlspecialchars($car['model']) . '">
+                <h3>' . htmlspecialchars($car['brand']) . ' ' . htmlspecialchars($car['model']) . ' (' . htmlspecialchars($car['age']) . ')</h3>
+                <p>Price: &euro;' . htmlspecialchars($car['price_per_day']) . ' / day</p>
                 ' . $button . '
-                <a href="favorites.php?remove_fav=' . $car['id'] . '" class="btn" style="background-color: #c9302c; margin-top: 10px;">Remove Favorite</a>
+                <br><br><a href="/favorites?remove_fav=' . $car['ID'] . '" class="delete-link">Remove from favorites</a><br><br>
             </div>
         ';
     }
@@ -58,7 +57,6 @@ if (empty($favoritedCarsHtml)) {
 
 // Load the view template
 
-include 'view/favorites.html';
 $content = file_get_contents(__DIR__ . '/view/favorites.html');
 
 // Replace the placeholder with the generated list
