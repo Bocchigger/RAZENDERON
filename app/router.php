@@ -6,7 +6,7 @@ session_start();
 
 $db = connect_db();
 
-$URI = $_SERVER['PATH_INFO'];
+$URI = $_SERVER['PATH_INFO'] ?? '/';
 // var_dump($_SERVER);
 
 switch ($URI) {

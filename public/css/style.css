@@ -351,3 +351,16 @@ body.login-page .container {
 .profile-info label {
     margin-top: 25px;
 }
+
+.btn-danger {
+    background-color: #b00000;
+    font-size: 95%;
+    padding: 12px;
+    box-shadow: unset;
+}
+
+.btn-danger:hover {
+    color: white;
+    background-color: rgb(255, 38, 38);
+    box-shadow: unset;
+}
